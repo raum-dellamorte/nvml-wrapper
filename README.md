@@ -10,6 +10,8 @@ A safe and ergonomic Rust wrapper for the [NVIDIA Management Library][nvml] (NVM
 a C-based programmatic interface for monitoring and managing various states within
 NVIDIA GPUs.
 
+## This fork was created for the sole purpose of merging someone else's PR into another someone else's library. I didn't want to wait.
+
 ```rust
 use nvml_wrapper::Nvml;
 
@@ -22,6 +24,10 @@ let fan_speed = device.fan_speed(0)?; // Currently 17% on my system
 let power_limit = device.enforced_power_limit()?; // 275k milliwatts on my system
 let encoder_util = device.encoder_utilization()?; // Currently 0 on my system; Not encoding anything
 let memory_info = device.memory_info()?; // Currently 1.63/6.37 GB used on my system
+
+for fan_idx in 0..device.num_fans()? {
+  device.set_fan_speed(fan_idx, 100)?; // Crank those fans!
+} 
 
 // ... and there's a whole lot more you can do. Most everything in NVML is wrapped and ready to go
 ```
